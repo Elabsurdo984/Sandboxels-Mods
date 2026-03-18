@@ -1285,7 +1285,7 @@ elements.converter = {
                 var y = pixel.y+coord[1];
                 if (!isEmpty(x,y, true)) {
 					var otherPixel = pixelMap[x][y];
-					if ((otherPixel.element == pixel.specialturn || (pixel.specialturn == "all" && otherPixel.element != pixel.contype)) && !elements.converter.ignore.includes(otherPixel.element)){
+					if ((otherPixel.element == pixel.specialturn || pixel.specialturn == "all") && !elements.converter.ignore.includes(otherPixel.element) && newPixel.element != pixel.contype){
 						changePixel(otherPixel, pixel.contype)
 					}
                 }

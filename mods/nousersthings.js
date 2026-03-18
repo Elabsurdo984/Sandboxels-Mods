@@ -701,7 +701,7 @@ elements.channel_pipe = {
         currentElementProp = {channel: currentChannel}
     },
     tick: function(pixel) {
-        if (typeof pixel.channel == "undefined"){changePixel(pixel,flash); logMessage("A channel pipe without a valid channel was attempted to be placed."); return;}
+        if (typeof pixel.channel == "undefined"){changePixel(pixel,"flash"); logMessage("A channel pipe without a valid channel was attempted to be placed."); return;}
 		if (!pixel.stage && pixelTicks-pixel.start > 60) {
 			for (var i = 0; i < squareCoords.length; i++) {
 				var coord = squareCoords[i];
@@ -828,7 +828,7 @@ elements.destroyable_channel_pipe = {
         currentElementProp = {channel: currentChannel}
     },
     tick: function(pixel) {
-        if (typeof pixel.channel == "undefined"){changePixel(pixel,flash); logMessage("A channel pipe without a valid channel was attempted to be placed."); return;}
+        if (typeof pixel.channel == "undefined"){changePixel(pixel,"flash"); logMessage("A channel pipe without a valid channel was attempted to be placed."); return;}
 		if (!pixel.stage && pixelTicks-pixel.start > 60) {
 			for (var i = 0; i < squareCoords.length; i++) {
 				var coord = squareCoords[i];
@@ -944,6 +944,7 @@ elements.destroyable_channel_pipe = {
 		doDefaults(pixel);
 	},
     category: "machines",
+    breakInto: "metal_scrap",
     movable: false,
     canContain: true,
 },
@@ -1277,17 +1278,14 @@ elements.converter = {
 	behavior: behaviors.WALL,
 	category: "machines",
 	tick: function(pixel) {
-		if (pixel.start === pixelTicks){
-			pixel.contype = converter2Var;
-			pixel.specialturn = converter1Var;
-		}
+		if (typeof pixel.contype == "undefined" || typeof pixel.specialturn == "undefined"){changePixel(pixel, "flash"); logMessage("A converter without valid properties was attempted to be placed."); return;}
 		 for (var i = 0; i < squareCoords.length; i++) {
                 var coord = squareCoords[i];
                 var x = pixel.x+coord[0];
                 var y = pixel.y+coord[1];
                 if (!isEmpty(x,y, true)) {
 					var otherPixel = pixelMap[x][y];
-					if ((otherPixel.element == pixel.specialturn || pixel.specialturn == "all") && !elements.converter.ignore.includes(otherPixel.element)){
+					if ((otherPixel.element == pixel.specialturn || (pixel.specialturn == "all" && otherPixel.element != pixel.contype)) && !elements.converter.ignore.includes(otherPixel.element)){
 						changePixel(otherPixel, pixel.contype)
 					}
                 }
@@ -1300,6 +1298,7 @@ elements.converter = {
 		var answer6 = await _nousersthingsprompt("Please input what it should turn into.",(converter2Var||undefined));
         if (!answer6) { return }
 		converter2Var = answer6;
+        currentElementProp = {contype: converter2Var, specialturn: converter1Var}
     },
 	ignore: ["converter", "wall", "ewall", "border"],
 	movable: false,

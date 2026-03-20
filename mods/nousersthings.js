@@ -3137,6 +3137,17 @@ elements.false_vacuum = {
     updateOrder: -Infinity
 }
 let signInput = "Hello World!";
+saveElementMigrations.sign = function(pixel){
+    pixel.element = "text";
+    pixel.text = pixel.sign;
+    delete pixel.sign;
+}
+saveElementMigrations.e_sign = function(pixel){
+    pixel.element = "text";
+    pixel.text = `[${pixel.sign}| ]`;
+    delete pixel.sign;
+}
+/*
 elements.sign = {
     color: "#FFFFFF",
     darkText: true,
@@ -3198,6 +3209,7 @@ renderPostPixel(function(ctx){ // sign stuff
         }
     }
 })
+    */
 let machinemodName = "nousersthings.js"
 elements.mod_dectector = {
     color: "#54681d",
@@ -3208,9 +3220,10 @@ elements.mod_dectector = {
     onSelect: async () => {
         let newMod = await _nousersthingsprompt("What mod should this machine detect?", "nousersthings.js"||modName)
         machinemodName = newMod
+        currentElementProp = {mod:machinemodName}
     },
     tick: (pixel) => {
-        if (!pixel.mod){pixel.mod = machinemodName}
+        if (typeof pixel.mod == "undefined"){changePixel(pixel, "flash"); logMessage("A detector without valid properties was attempted to be placed."); return;}
         if (loadedMods.includes(pixel.mod)){
             for (let i = 0; i < adjacentCoords.length; i++){
                 let x = adjacentCoords[i][0] + pixel.x;
@@ -3242,9 +3255,10 @@ elements.delay = {
         let ansdelay = await _nousersthingsprompt("How long should the delay be in ticks?", 30)
         delayVariable = parseInt(ansdelay);
         logMessage("Will delay incoming signals. This element also acts as a one-way wire and will configure its direction when first shocked.")
+        currentElementProp = {delay:delayVariable}
     },
     tick: function(pixel){
-        if (typeof pixel.delay == "undefined"){pixel.delay = delayVariable}
+        if (typeof pixel.delay == "undefined"){changePixel(pixel, "flash"); logMessage("A delay without valid properties was attempted to be placed."); return;}
         if (typeof pixel.wait == "undefined"){pixel.wait = 0}
         if (!pixel.coord){pixel.coord = [0, 0]}
         if (typeof pixel.cMode == "undefined"){pixel.cMode = true}

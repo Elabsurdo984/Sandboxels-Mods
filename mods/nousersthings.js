@@ -2094,13 +2094,15 @@ elements.ray_emitter = {
         }
     },
     insulate: true,
+    updateOrder: 681392,
 }
 elements.indestructible_battery = {
     color: elements.battery.color,
     behavior: elements.battery.behavior,
     category: elements.battery.category,
     hardness: 1,
-    movable: false
+    movable: false,
+    updateOrder: -975791
 }
 elements.ray = {
     color: "#ffffff",
@@ -2337,7 +2339,8 @@ elements.insulated_wire = {
             }
         }
         doHeat(pixel)
-    }
+    },
+    updateOrder:-975790,
 }
 elements.wire_bridge = {
     color: "#461716",
@@ -3016,6 +3019,7 @@ let pipe_transmitter_channelVar = 0;
 elements.pipe_transmitter = {
     color: "#6e6250",
     category: "deprecated",
+    updateOrder: -351083,
     movable: false,
     canContain: true,
     insulate: true,
@@ -3046,6 +3050,7 @@ let pipe_receiver_channelVar = 0;
 elements.pipe_receiver = {
     color: "#4d4b63",
     category: "deprecated",
+    updateOrder: 9007273,
     movable: false,
     canContain: true,
     insulate: true,
@@ -3253,6 +3258,7 @@ objectColorToString = function(object){
 let delayVariable = 0
 elements.delay = {
     color: "#df3b3b",
+    updateOrder: -5335888,
     behavior: behaviors.WALL,
     category: "machines",
     movable: false,
@@ -3304,3 +3310,5 @@ elements.delay = {
         } else {drawSquare(ctx, pixel.color, pixel.x, pixel.y)}
     }
 }
+elements.wire.updateOrder = -681392
+elements.battery.updateOrder = 8199598

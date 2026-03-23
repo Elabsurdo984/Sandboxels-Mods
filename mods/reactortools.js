@@ -7,7 +7,7 @@ elements.heatburst = {
     "XX|HT:30|XX",
     ],
     category: "hendrik",
-    
+    insulate: "true"
 }
 
 elements.nuclei = {

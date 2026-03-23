@@ -3328,3 +3328,20 @@ elements.delay = {
 }
 elements.wire.updateOrder = -681392
 elements.battery.updateOrder = 8199598
+elements.e_void = {
+    color: "#2a2715",
+    category: "machines",
+    movable: false,
+    ignore: ["wall", "wire", "e_wall"],
+    onShiftSelect: async () => {
+        let ans = await _nousersthingsprompt("What elements should this e-void delete?", "")
+        currentElementProp = {filter:ans}
+    },
+    tick: function(pixel){
+        for (let i = 0; i<adjacentCoords.length;i++){
+            let x = adjacentCoords[i][0]
+            let y = adjacentCoords[i][0]
+            if (!isEmpty)
+        }
+    }
+}

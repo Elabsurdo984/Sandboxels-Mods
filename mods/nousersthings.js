@@ -3543,7 +3543,7 @@ elements.aerogel = {
 			let y = pixel.y+coord[1];
             if (!isEmpty(x, y, true)){
                 let otherPixel = pixelMap[x][y]
-                if ((otherPixel.element == "aerogel" || !elements[otherPixel.element].insulate) && Math.random() < 0.001){
+                if ((otherPixel.element == "aerogel" || !elements[otherPixel.element].insulate) && Math.random() < 0.01){
                     let thisTemp = weightedAverage(pixel.temp, otherPixel.temp, 0.99)
                     let otherTemp = weightedAverage(otherPixel.temp, pixel.temp, 0.99)
                     pixel.temp = thisTemp;
